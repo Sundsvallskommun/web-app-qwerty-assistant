@@ -149,11 +149,6 @@ export const ChatWindow = ({
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setQuery(e.target.value)
             }
-            placeholder={
-              history.length < 2
-                ? `Ställ en fråga till ${import.meta.env.VITE_ASSISTANT_NAME}`
-                : "Ställ en följdfråga"
-            }
           />
         </FormControl>
 
