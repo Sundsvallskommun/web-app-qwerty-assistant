@@ -30,8 +30,10 @@ export const ChatWindow = ({
   const showReferences = true;
   const [query, setQuery] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [lastMessage, setLastMessage] = useState("");
   const { assistantId } = useAppContext();
+  const showHistory = history.length > 0;
 
   const handleQuerySubmit = (s?: string) => {
     const q = s || query;
@@ -63,10 +65,11 @@ export const ChatWindow = ({
   return (
     <>
       <div className="flex-grow p-[16px] pb-[24px] bg-white flex flex-col overflow-y-scroll">
-        {history.length < 2 ? (
+        {!showHistory ? (
           <ChatWelcome
             setQuery={setQuery}
             handleQuerySubmit={handleQuerySubmit}
+            inputRef={inputRef}
           />
         ) : (
           <div tabIndex={0}>
@@ -143,14 +146,15 @@ export const ChatWindow = ({
         )}
         <div ref={scrollRef}></div>
       </div>
-      <div className="mx-md border-0 border-t-1 border-solid border-gray-100 h-[64px] flex items-center justify-center gap-sm bg-white flex-shrink-0">
+      <div className="mx-md border-0 border-t-1 border-solid border-gray-100 h-[64px] flex items-center justify-around gap-sm bg-white flex-shrink-0">
         <FormControl id="query" className="w-4/5">
           <FormLabel className="sr-only">
-            {history.length < 2
-              ? `Ställ en fråga till ${import.meta.env.VITE_ASSISTANT_NAME}`
-              : "Ställ en följdfråga"}
+            {showHistory
+              ? "Ställ en följdfråga"
+              : `Ställ en fråga till ${import.meta.env.VITE_ASSISTANT_NAME}`}
           </FormLabel>
           <Input
+            ref={inputRef}
             type="text"
             value={query}
             onKeyDown={(e) => {
@@ -170,7 +174,7 @@ export const ChatWindow = ({
           onClick={() => {
             handleQuerySubmit(query);
             setQuery("");
-            // inputRef.current?.focus();
+            inputRef.current?.focus();
           }}
           size="md"
         >

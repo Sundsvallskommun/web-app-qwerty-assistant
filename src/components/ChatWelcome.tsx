@@ -4,9 +4,11 @@ import { Logo } from "./Logo";
 export const ChatWelcome = ({
   setQuery,
   handleQuerySubmit,
+  inputRef,
 }: {
   setQuery: (s) => void;
   handleQuerySubmit: (s: string) => void;
+  inputRef: React.MutableRefObject<HTMLInputElement>;
 }) =>
   import.meta.env.VITE_APPLICATION === "VUX" ? (
     <div className="w-full h-full flex flex-col justify-between">
@@ -35,6 +37,7 @@ export const ChatWelcome = ({
                 onClick={() => {
                   setQuery(s);
                   handleQuerySubmit(s);
+                  inputRef.current?.focus();
                 }}
                 className="rounded-12 p-12 bg-vattjom-surface-accent font-semibold text-grey-900 text-small flex items-center justify-around gap-12"
               >
