@@ -16,6 +16,7 @@ import { AssistantAvatar } from "./AssistantAvatar";
 import { ChatWelcome } from "./ChatWelcome";
 import { UserAvatar } from "./UserAvatar";
 import { MarkdownRendered } from "./MarkdownRendered";
+import { useAppContext } from "../context/app.context";
 
 export const ChatWindow = ({
   history,
@@ -30,6 +31,7 @@ export const ChatWindow = ({
   const [query, setQuery] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
   const [lastMessage, setLastMessage] = useState("");
+  const { assistantId } = useAppContext();
 
   const handleQuerySubmit = (s?: string) => {
     const q = s || query;
@@ -141,7 +143,7 @@ export const ChatWindow = ({
         )}
         <div ref={scrollRef}></div>
       </div>
-      <div className="border-0 border-t-1 border-solid border-gray-100 h-[64px] flex items-center justify-center gap-md bg-white flex-shrink-0">
+      <div className="mx-md border-0 border-t-1 border-solid border-gray-100 h-[64px] flex items-center justify-center gap-sm bg-white flex-shrink-0">
         <FormControl id="query" className="w-4/5">
           <FormLabel className="sr-only">
             {history.length < 2
@@ -163,17 +165,16 @@ export const ChatWindow = ({
         </FormControl>
 
         <Button
-          aria-label="Skicka fråga"
-          color={"primary"}
-          variant={done ? "primary" : "tertiary"}
           className="p-8 hover:opacity-90"
-          onClick={() => handleQuerySubmit()}
+          disabled={!assistantId || !query || query.trim() === ""}
+          onClick={() => {
+            handleQuerySubmit(query);
+            setQuery("");
+            // inputRef.current?.focus();
+          }}
+          size="md"
         >
-          {done ? (
-            <Icon name="send-horizontal" size={20} />
-          ) : (
-            <Spinner size={2} />
-          )}
+          {done ? <span>Skicka</span> : <Spinner size={2} />}
         </Button>
       </div>
     </>

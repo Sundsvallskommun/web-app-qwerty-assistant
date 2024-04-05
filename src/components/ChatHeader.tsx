@@ -12,12 +12,17 @@ export const ChatHeader = ({ fullscreen, setFullscreen, open, setOpen }) => {
         open && fullscreen
           ? "h-[72px] rounded-0 bg-white text-primitives-gray-900"
           : "h-[62px] rounded-0 sm:rounded-tl-16 bg-primitives-gray-900 text-[#E5E5E5]",
-        open ? (fullscreen ? "p-[20px]" : "p-[15px]") : "p-10 cursor-pointer"
+        open
+          ? fullscreen
+            ? "p-[20px]"
+            : "p-[15px] cursor-pointer"
+          : "p-10 cursor-pointer"
       )}
       role="button"
       aria-label={open ? `Stäng assistent` : `Öppna assistent`}
+      title={open ? `Stäng assistent` : `Öppna assistent`}
       onClick={() => {
-        if (!open && assistantId) {
+        if (assistantId) {
           setOpen(!open);
         }
       }}
@@ -72,6 +77,7 @@ export const ChatHeader = ({ fullscreen, setFullscreen, open, setOpen }) => {
       ) : null}
       <Button
         aria-label={open ? `Stäng assistent` : `Öppna assistent`}
+        title={open ? `Stäng assistent` : `Öppna assistent`}
         disabled={!assistantId}
         iconButton
         variant={"tertiary"}
