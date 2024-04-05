@@ -64,7 +64,7 @@ export const ChatWindow = ({
 
   return (
     <>
-      <div className="flex-grow p-[16px] pb-[24px] bg-white flex flex-col overflow-y-scroll">
+      <div className="flex-grow p-[16px] pb-[24px] bg-background-content flex flex-col overflow-y-scroll">
         {!showHistory ? (
           <ChatWelcome
             setQuery={setQuery}
@@ -146,7 +146,7 @@ export const ChatWindow = ({
         )}
         <div ref={scrollRef}></div>
       </div>
-      <div className="mx-md border-0 border-t-1 border-solid border-gray-100 h-[64px] flex items-center justify-around gap-sm bg-white flex-shrink-0">
+      <div className="mx-md border-0 border-t-1 border-solid border-gray-100 h-[64px] flex items-center justify-around gap-sm bg-background-content flex-shrink-0">
         <FormControl id="query" className="w-4/5">
           <FormLabel className="sr-only">
             {showHistory

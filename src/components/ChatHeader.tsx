@@ -10,7 +10,7 @@ export const ChatHeader = ({ fullscreen, setFullscreen, open, setOpen }) => {
       className={cx(
         "flex justify-between items-center gap-5 cursor-default",
         open && fullscreen
-          ? "h-[72px] rounded-0 bg-white text-primitives-gray-900"
+          ? "h-[72px] rounded-0 bg-background-content text-primitives-gray-900"
           : "h-[62px] rounded-0 sm:rounded-tl-16 bg-primitives-gray-900 text-[#E5E5E5]",
         open
           ? fullscreen
@@ -37,7 +37,7 @@ export const ChatHeader = ({ fullscreen, setFullscreen, open, setOpen }) => {
       ) : import.meta.env.VITE_APPLICATION === "VUX" ? (
         <div
           className={cx(
-            `bg-vattjom-surface-primary rounded-12 flex items-center justify-center`,
+            `bg-vattjom-surface-primary dark:bg-vattjom-background-200 rounded-12 flex items-center justify-center`,
             open ? "w-[32px] h-32" : "w-[40px] h-[40px]"
           )}
         >
