@@ -87,10 +87,13 @@ export const Assistant = () => {
     setSessionId(selectedSession?.id);
     if (selectedSession) {
       selectedSession?.messages?.slice().forEach((m) => {
-        addHistoryEntry("user", m.question);
+        const answerId = crypto.randomUUID();
+        const questionId = crypto.randomUUID();
+        addHistoryEntry("user", m.question, questionId);
         addHistoryEntry(
           "assistant",
           m.answer,
+          answerId,
           m.references?.map((r) => ({
             title: r.metadata.title || r.metadata.url,
             url: r.metadata.url,

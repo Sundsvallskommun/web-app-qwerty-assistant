@@ -4,14 +4,16 @@ import { Logo } from "./Logo";
 export const ChatWelcome = ({
   setQuery,
   handleQuerySubmit,
+  inputRef,
 }: {
   setQuery: (s) => void;
   handleQuerySubmit: (s: string) => void;
+  inputRef: React.MutableRefObject<HTMLInputElement>;
 }) =>
   import.meta.env.VITE_APPLICATION === "VUX" ? (
     <div className="w-full h-full flex flex-col justify-between">
       <div className="flex-grow flex flex-col items-center justify-center px-20">
-        <div className="flex items-center justify-center h-[72px] w-[72px] rounded-12 bg-vattjom-surface-primary">
+        <div className="flex items-center justify-center h-[72px] w-[72px] rounded-12 bg-vattjom-surface-primary dark:bg-vattjom-background-200">
           <Logo size={72} bgColor={"transparent"} />
         </div>
         <div className="text-center mt-16">
@@ -35,6 +37,7 @@ export const ChatWelcome = ({
                 onClick={() => {
                   setQuery(s);
                   handleQuerySubmit(s);
+                  inputRef.current?.focus();
                 }}
                 className="rounded-12 p-12 bg-vattjom-surface-accent font-semibold text-grey-900 text-small flex items-center justify-around gap-12"
               >

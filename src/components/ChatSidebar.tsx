@@ -97,7 +97,7 @@ export const ChatSidebar = ({
             className={cx(
               `w-full cursor-pointer justify-start p-8`,
               a.id === assistant.id
-                ? `bg-white hover:bg-gray-200 text-primitives-gray-900`
+                ? `bg-background-content hover:bg-gray-200 text-primitives-gray-900`
                 : `bg-primitives-gray-600 hover:bg-primitives-gray-500 text-white`
             )}
             variant="tertiary"
@@ -142,7 +142,7 @@ export const ChatSidebar = ({
           <Icon name="arrow-down-left" size={20} />
         </Button>
       </div>
-      <div className="flex-grow w-[408px] pl-[96px] py-[24px] bg-white flex flex-col overflow-y-scroll">
+      <div className="flex-grow w-[408px] pl-[96px] py-[24px] bg-background-content flex flex-col overflow-y-scroll">
         <div className="flex flex-col gap-12 items-start">
           <div
             className="flex items-center gap-4 cursor-pointer bg-blue-200 hover:bg-blue-300 p-8 rounded-6 whitespace-nowrap"

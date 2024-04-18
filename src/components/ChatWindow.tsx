@@ -1,4 +1,5 @@
 import {
+  Accordion,
   Button,
   cx,
   FormControl,
@@ -15,6 +16,7 @@ import { AssistantAvatar } from "./AssistantAvatar";
 import { ChatWelcome } from "./ChatWelcome";
 import { UserAvatar } from "./UserAvatar";
 import { MarkdownRendered } from "./MarkdownRendered";
+import { useAppContext } from "../context/app.context";
 
 export const ChatWindow = ({
   history,
@@ -28,7 +30,10 @@ export const ChatWindow = ({
   const showReferences = true;
   const [query, setQuery] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [lastMessage, setLastMessage] = useState("");
+  const { assistantId } = useAppContext();
+  const showHistory = history.length > 0;
 
   const handleQuerySubmit = (s?: string) => {
     const q = s || query;
@@ -59,11 +64,12 @@ export const ChatWindow = ({
 
   return (
     <>
-      <div className="flex-grow p-[16px] pb-[24px] bg-white flex flex-col overflow-y-scroll">
-        {history.length < 2 ? (
+      <div className="flex-grow p-[16px] pb-[24px] bg-background-content flex flex-col overflow-y-scroll">
+        {!showHistory ? (
           <ChatWelcome
             setQuery={setQuery}
             handleQuerySubmit={handleQuerySubmit}
+            inputRef={inputRef}
           />
         ) : (
           <div tabIndex={0}>
@@ -96,49 +102,59 @@ export const ChatWindow = ({
                     >
                       <MarkdownRendered text={sanitized(msg.text)} />
                     </div>
-                    {showReferences ? (
-                      <>
-                        {msg.references?.length ? (
-                          <>
-                            <span className="sr-only">
-                              Referenser {msg.references?.length || 0} stycken.
+                    {showReferences && msg.references?.length > 0 ? (
+                      <Accordion size="sm" className="mt-20 p-0">
+                        <Accordion.Item
+                          className="bg-gray-100 border-1 border-gray-100 rounded-12 pl-20 pr-12 dark:text-black"
+                          header={
+                            <span className="dark:text-black">
+                              Kunskapskällor ({msg.references?.length || 0})
                             </span>
-                            <ul aria-label="Referenser">
-                              {msg.references?.map((r, i) => (
-                                <li
-                                  className="max-w-md w-4/5 bg-gray-200 p-6 pl-12 my-8 rounded-6 truncate hover:whitespace-normal"
-                                  key={`ref-${i}-${idx}`}
-                                >
-                                  <small>
-                                    <Link external href={r.url}>
-                                      {r.title}
-                                    </Link>
-                                  </small>
-                                </li>
-                              ))}
-                            </ul>
-                          </>
-                        ) : null}
-                      </>
+                          }
+                        >
+                          <ul aria-label="Kunskapskällor">
+                            {msg.references?.map((r, i) => (
+                              <li
+                                className="max-w-full w-full my-8 rounded-6 whitespace-normal text-base"
+                                key={`ref-${i}-${idx}`}
+                              >
+                                <small>
+                                  <Link
+                                    external
+                                    href={r.url}
+                                    className="dark:text-black"
+                                  >
+                                    {r.title}
+                                  </Link>
+                                </small>
+                              </li>
+                            ))}
+                          </ul>
+                        </Accordion.Item>
+                      </Accordion>
                     ) : null}
                   </div>
                 </div>
               ))}
             <div aria-live={"polite"} className="sr-only">
-              {lastMessage}
+              <MarkdownRendered
+                tabbable={false}
+                text={sanitized(lastMessage)}
+              />
             </div>
           </div>
         )}
         <div ref={scrollRef}></div>
       </div>
-      <div className="border-0 border-t-1 border-solid border-gray-100 h-[64px] flex items-center justify-center gap-md bg-white flex-shrink-0">
+      <div className="mx-md border-0 border-t-1 border-solid border-gray-100 h-[64px] flex items-center justify-around gap-sm bg-background-content flex-shrink-0">
         <FormControl id="query" className="w-4/5">
           <FormLabel className="sr-only">
-            {history.length < 2
-              ? `Ställ en fråga till ${import.meta.env.VITE_ASSISTANT_NAME}`
-              : "Ställ en följdfråga"}
+            {showHistory
+              ? "Ställ en följdfråga"
+              : `Ställ en fråga till ${import.meta.env.VITE_ASSISTANT_NAME}`}
           </FormLabel>
           <Input
+            ref={inputRef}
             type="text"
             value={query}
             onKeyDown={(e) => {
@@ -149,26 +165,20 @@ export const ChatWindow = ({
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setQuery(e.target.value)
             }
-            placeholder={
-              history.length < 2
-                ? `Ställ en fråga till ${import.meta.env.VITE_ASSISTANT_NAME}`
-                : "Ställ en följdfråga"
-            }
           />
         </FormControl>
 
         <Button
-          aria-label="Skicka fråga"
-          color={"primary"}
-          variant={done ? "primary" : "tertiary"}
           className="p-8 hover:opacity-90"
-          onClick={() => handleQuerySubmit()}
+          disabled={!assistantId || !query || query.trim() === ""}
+          onClick={() => {
+            handleQuerySubmit(query);
+            setQuery("");
+            inputRef.current?.focus();
+          }}
+          size="md"
         >
-          {done ? (
-            <Icon name="send-horizontal" size={20} />
-          ) : (
-            <Spinner size={2} />
-          )}
+          {done ? <span>Skicka</span> : <Spinner size={2} />}
         </Button>
       </div>
     </>
