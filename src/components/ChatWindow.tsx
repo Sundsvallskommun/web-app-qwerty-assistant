@@ -17,23 +17,35 @@ import { ChatWelcome } from "./ChatWelcome";
 import { UserAvatar } from "./UserAvatar";
 import { MarkdownRendered } from "./MarkdownRendered";
 import { useAppContext } from "../context/app.context";
+import useChat from "../hooks/useChat";
+import { Feedback } from "./Feedback";
 
 export const ChatWindow = ({
-  history,
   sendQuery,
-  done,
 }: {
-  history: ChatHistory;
   sendQuery: (q: string) => void;
-  done: boolean;
 }) => {
   const showReferences = true;
   const [query, setQuery] = useState("");
+  const { history, done } = useChat();
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [lastMessage, setLastMessage] = useState("");
   const { assistantId } = useAppContext();
+  const [showLoading, setShowLoading] = useState<boolean>(false);
+  const timeout = useRef(setTimeout(() => {}));
   const showHistory = history.length > 0;
+
+  useEffect(() => {
+    if (!done) {
+      timeout.current = setTimeout(() => {
+        setShowLoading(true);
+      }, 3500);
+    } else {
+      clearTimeout(timeout.current);
+      setShowLoading(false);
+    }
+  }, [done]);
 
   const handleQuerySubmit = (s?: string) => {
     const q = s || query;
@@ -62,9 +74,16 @@ export const ChatWindow = ({
     }
   }, [history]);
 
+  const messageIsAriaHidden = (idx, history, done, msg) =>
+    idx === history.length - 1 && msg.origin === "assistant" ? !done : false;
+
   return (
     <>
-      <div className="flex-grow p-[16px] pb-[24px] bg-background-content flex flex-col overflow-y-scroll">
+      <div
+        className="flex-grow p-[16px] pb-[24px] bg-background-content flex flex-col overflow-y-scroll"
+        aria-live="polite"
+        aria-atomic={false}
+      >
         {!showHistory ? (
           <ChatWelcome
             setQuery={setQuery}
@@ -73,69 +92,95 @@ export const ChatWindow = ({
           />
         ) : (
           <div tabIndex={0}>
-            {history
-              .filter((msg) => msg.text !== "")
-              .map((msg, idx) => (
-                <div
-                  key={`history-${idx}`}
-                  className="mb-24 flex items-start gap-12"
-                >
-                  <div aria-hidden>
-                    {msg.origin === "assistant" ? (
-                      <AssistantAvatar />
-                    ) : msg.origin === "system" ? (
-                      <AssistantAvatar />
-                    ) : (
-                      <UserAvatar />
-                    )}
-                  </div>
-                  <div>
-                    {msg.origin === "assistant" || msg.origin === "system" ? (
-                      <strong>{import.meta.env.VITE_ASSISTANT_NAME}</strong>
-                    ) : (
-                      <strong>Du</strong>
-                    )}
-                    <div
-                      className={cx(
-                        msg.origin === "system" ? `text-error` : null
-                      )}
-                    >
-                      <MarkdownRendered text={sanitized(msg.text)} />
-                    </div>
-                    {showReferences && msg.references?.length > 0 ? (
-                      <Accordion size="sm" className="mt-20 p-0">
-                        <Accordion.Item
-                          className="bg-gray-100 border-1 border-gray-100 rounded-12 pl-20 pr-12 dark:text-black"
-                          header={
-                            <span className="dark:text-black">
-                              Kunskapskällor ({msg.references?.length || 0})
-                            </span>
-                          }
-                        >
-                          <ul aria-label="Kunskapskällor">
-                            {msg.references?.map((r, i) => (
-                              <li
-                                className="max-w-full w-full my-8 rounded-6 whitespace-normal text-base"
-                                key={`ref-${i}-${idx}`}
-                              >
-                                <small>
-                                  <Link
-                                    external
-                                    href={r.url}
-                                    className="dark:text-black"
-                                  >
-                                    {r.title}
-                                  </Link>
-                                </small>
-                              </li>
-                            ))}
-                          </ul>
-                        </Accordion.Item>
-                      </Accordion>
-                    ) : null}
-                  </div>
+            {history.map((msg, idx) => (
+              <div
+                key={`history-${idx}`}
+                className="mb-24 flex items-start gap-12"
+              >
+                <div aria-hidden={true}>
+                  {msg.origin === "assistant" ? (
+                    <AssistantAvatar />
+                  ) : msg.origin === "system" ? (
+                    <AssistantAvatar />
+                  ) : (
+                    <UserAvatar />
+                  )}
                 </div>
-              ))}
+                {idx === history.length - 1 &&
+                msg.origin === "assistant" &&
+                showLoading ? (
+                  <div className="sr-only" aria-live="polite">
+                    Inväntar svar
+                  </div>
+                ) : null}
+                <div
+                  aria-hidden={messageIsAriaHidden(idx, history, done, msg)}
+                  className="max-w-[85%]"
+                >
+                  {msg.origin === "assistant" || msg.origin === "system" ? (
+                    <strong>{import.meta.env.VITE_ASSISTANT_NAME}</strong>
+                  ) : (
+                    <strong>Du</strong>
+                  )}
+                  <div
+                    className={cx(
+                      msg.origin === "system" ? `text-error` : null
+                    )}
+                  >
+                    <MarkdownRendered
+                      text={msg.text}
+                      messageId={msg.id}
+                      hideElements={messageIsAriaHidden(
+                        idx,
+                        history,
+                        done,
+                        msg
+                      )}
+                    />
+                  </div>
+                  {showReferences && msg.references?.length > 0 ? (
+                    <Accordion size="sm" className="mt-20 p-0">
+                      <Accordion.Item
+                        className="bg-gray-100 border-1 border-gray-100 rounded-12 pl-20 pr-12 dark:text-black"
+                        header={
+                          <span className="dark:text-black">
+                            Kunskapskällor ({msg.references?.length || 0})
+                          </span>
+                        }
+                      >
+                        <ul aria-label="Kunskapskällor">
+                          {msg.references?.map((r, i) => (
+                            <li
+                              className="max-w-full w-full my-8 rounded-6 whitespace-normal text-base"
+                              key={`ref-${i}-${idx}`}
+                            >
+                              <small>
+                                <Link
+                                  external
+                                  href={r.url}
+                                  className="dark:text-black"
+                                >
+                                  {r.title}
+                                </Link>
+                              </small>
+                            </li>
+                          ))}
+                        </ul>
+                      </Accordion.Item>
+                    </Accordion>
+                  ) : null}
+                  {done ? (
+                    <Feedback
+                      history={history}
+                      msg={msg}
+                      idx={idx}
+                      scrollRef={scrollRef}
+                      inputRef={inputRef}
+                    />
+                  ) : null}
+                </div>
+              </div>
+            ))}
             <div aria-live={"polite"} className="sr-only">
               <MarkdownRendered
                 tabbable={false}
