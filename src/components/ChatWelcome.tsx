@@ -27,9 +27,10 @@ export const ChatWelcome = ({
         <h5 className="text-large font-bold">Vanliga frågor</h5>
         <ul>
           {[
-            "Vad är vuxenutbildning?",
-            "Hur ansöker jag till en kurs?",
-            "Kan jag få studievägledning?",
+            "Hur gör jag en ansökan?",
+            "Var bokar man tid hos studievägledaren?",
+            "Hur gör man en SFI-anmälan?",
+            "How do I apply for a course?",
           ].map((s, idx) => (
             <li key={idx} className="my-sm">
               <Button
