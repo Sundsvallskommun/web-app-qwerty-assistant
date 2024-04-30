@@ -20,10 +20,12 @@ import { useAppContext } from "../context/app.context";
 
 export const ChatWindow = ({
   history,
+  clearHistory,
   sendQuery,
   done,
 }: {
   history: ChatHistory;
+  clearHistory: () => void;
   sendQuery: (q: string) => void;
   done: boolean;
 }) => {
@@ -64,6 +66,21 @@ export const ChatWindow = ({
 
   return (
     <>
+      {showHistory ? (
+        <div className="relative">
+          <Button
+            title="Stäng sökresultat"
+            iconButton
+            aria-label="Stäng sökresultat"
+            size="sm"
+            variant="tertiary"
+            onClick={clearHistory}
+            className="xs:hidden sm:flex absolute right-12 top-12 p-8 rounded-full flex items-center justify-center"
+          >
+            <Icon name={"x"} />
+          </Button>
+        </div>
+      ) : null}
       <div className="flex-grow p-[16px] pb-[24px] bg-background-content flex flex-col overflow-y-scroll">
         {!showHistory ? (
           <ChatWelcome
@@ -72,7 +89,7 @@ export const ChatWindow = ({
             inputRef={inputRef}
           />
         ) : (
-          <div tabIndex={0}>
+          <div>
             {history
               .filter((msg) => msg.text !== "")
               .map((msg, idx) => (
@@ -89,7 +106,7 @@ export const ChatWindow = ({
                       <UserAvatar />
                     )}
                   </div>
-                  <div>
+                  <div className="max-w-[85%] break-words">
                     {msg.origin === "assistant" || msg.origin === "system" ? (
                       <strong>{import.meta.env.VITE_ASSISTANT_NAME}</strong>
                     ) : (
