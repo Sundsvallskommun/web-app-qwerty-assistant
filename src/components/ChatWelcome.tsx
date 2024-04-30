@@ -17,7 +17,7 @@ export const ChatWelcome = ({
           <Logo size={72} bgColor={"transparent"} />
         </div>
         <div className="text-center mt-16">
-          <h4>Vuxenutbildningen</h4>
+          <h4>{import.meta.env.VITE_ASSISTANT_NAME}</h4>
           <p className="my-4 text-small">
             AI-assistent som svarar på frågor om Vuxenutbildningen
           </p>
