@@ -11,14 +11,14 @@ export const AssistantAvatar = () => {
   ) : import.meta.env.VITE_APPLICATION === "QWERTY" ? (
     <div
       aria-label="Assistent"
-      className="w-[32px] h-[32px] bg-vattjom-surface-primary rounded-12 flex items-center justify-center"
+      className="w-[32px] h-[32px] bg-gronsta-surface-primary rounded-12 flex items-center justify-center"
     >
       <Logo size={28} bgColor="transparent" />
     </div>
   ) : (
     <div
       aria-label="Assistent"
-      className="w-[32px] h-[32px] bg-vattjom-surface-primary rounded-12 flex items-center justify-center"
+      className="w-[32px] h-[32px] bg-gronsta-surface-primary rounded-12 flex items-center justify-center"
     >
       <Logo size={28} bgColor="transparent" />
     </div>
