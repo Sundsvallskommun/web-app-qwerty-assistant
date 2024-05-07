@@ -41,7 +41,7 @@ function App({
   }, [user, hash, assistantId]);
 
   return (
-    <GuiProvider theme={theme}>
+    <GuiProvider theme={theme} colorScheme={colorScheme}>
       <Assistant />
     </GuiProvider>
   );
