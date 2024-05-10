@@ -142,12 +142,7 @@ export const Assistant = () => {
 
           {open ? (
             <>
-              <ChatWindow
-                sendQuery={sendQuery}
-                history={history}
-                clearHistory={clearHistory}
-                done={done}
-              />
+              <ChatWindow sendQuery={sendQuery} />
             </>
           ) : null}
         </div>

@@ -1,5 +1,5 @@
 import { defaultTheme, extendTheme, GuiProvider } from "@sk-web-gui/react";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { Assistant } from "./components/Assistant";
 import { useAppContext } from "./context/app.context";
@@ -42,7 +42,9 @@ function App({
 
   return (
     <GuiProvider theme={theme} colorScheme={colorScheme}>
-      <Assistant />
+      <Suspense fallback="loading">
+        <Assistant />
+      </Suspense>
     </GuiProvider>
   );
 }
