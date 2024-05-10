@@ -27,7 +27,7 @@ export const ChatWindow = ({
 }) => {
   const showReferences = true;
   const [query, setQuery] = useState("");
-  const { history, done } = useChat();
+  const { history, clearHistory, done } = useChat();
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [lastMessage, setLastMessage] = useState("");
@@ -84,6 +84,21 @@ export const ChatWindow = ({
         aria-live="polite"
         aria-atomic={false}
       >
+        {showHistory ? (
+          <div className="relative">
+            <Button
+              title="Stäng sökresultat"
+              iconButton
+              aria-label="Stäng sökresultat"
+              size="sm"
+              variant="tertiary"
+              onClick={clearHistory}
+              className="xs:hidden sm:flex absolute right-12 top-12 p-8 rounded-full flex items-center justify-center"
+            >
+              <Icon name={"x"} />
+            </Button>
+          </div>
+        ) : null}
         {!showHistory ? (
           <ChatWelcome
             setQuery={setQuery}
@@ -91,7 +106,7 @@ export const ChatWindow = ({
             inputRef={inputRef}
           />
         ) : (
-          <div tabIndex={0}>
+          <div>
             {history.map((msg, idx) => (
               <div
                 key={`history-${idx}`}
@@ -115,7 +130,7 @@ export const ChatWindow = ({
                 ) : null}
                 <div
                   aria-hidden={messageIsAriaHidden(idx, history, done, msg)}
-                  className="max-w-[85%]"
+                  className="max-w-[85%] break-words"
                 >
                   {msg.origin === "assistant" || msg.origin === "system" ? (
                     <strong>{import.meta.env.VITE_ASSISTANT_NAME}</strong>

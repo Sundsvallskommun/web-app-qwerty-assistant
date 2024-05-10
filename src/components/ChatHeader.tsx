@@ -37,7 +37,7 @@ export const ChatHeader = ({ fullscreen, setFullscreen, open, setOpen }) => {
       ) : import.meta.env.VITE_APPLICATION === "VUX" ? (
         <div
           className={cx(
-            `bg-vattjom-surface-primary dark:bg-vattjom-background-200 rounded-12 flex items-center justify-center`,
+            `bg-gronsta-surface-primary dark:bg-gronsta-background-200 rounded-12 flex items-center justify-center`,
             open ? "w-[32px] h-32" : "w-[40px] h-[40px]"
           )}
         >
