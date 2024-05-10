@@ -8,19 +8,28 @@ export const AssistantAvatar = () => {
         `bg-[#65b88f] rounded-12 bg-assistant bg-center bg-contain w-[32px] h-32`
       )}
     ></div>
-  ) : import.meta.env.VITE_APPLICATION === "QWERTY" ? (
+  ) : import.meta.env.VITE_APPLICATION === "VUX" ? (
     <div
       aria-label="Assistent"
       className="w-[32px] h-[32px] bg-gronsta-surface-primary rounded-12 flex items-center justify-center"
     >
       <Logo size={28} bgColor="transparent" />
     </div>
-  ) : (
-    <div
-      aria-label="Assistent"
-      className="w-[32px] h-[32px] bg-gronsta-surface-primary rounded-12 flex items-center justify-center"
-    >
-      <Logo size={28} bgColor="transparent" />
-    </div>
-  );
+  ) : import.meta.env.VITE_APPLICATION === "SERVANET" ? (
+    <>
+      {/* <div
+        aria-label="Assistent"
+        className={cx(
+          `bg-white rounded-12 border-1 bg-servanetlogo bg-center bg-contain w-[32px] h-32`
+        )}
+        // style={{ backgroundImage: `url(${backgroundImageUrl})` }}
+      ></div> */}
+      <div
+        aria-label="Assistent"
+        className="w-[32px] h-[32px] bg-gronsta-surface-primary rounded-12 flex items-center justify-center"
+      >
+        <Logo size={28} bgColor="transparent" />
+      </div>
+    </>
+  ) : null;
 };

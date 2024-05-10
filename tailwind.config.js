@@ -27,6 +27,18 @@ module.exports = {
         extend: {
           backgroundImage: {
             assistant: "url('../assets/assistanticon.png')",
+            servanetlogo: "url('../assets/servanetlogo.png')",
+          },
+          backgroundColor: {
+            vux: "#005595",
+            servanet: "#0B77B9",
+            servanetDark: "#FB77B9",
+          },
+          fontFamily: {
+            vuxHeader: ["Raleway", "Arial", "Helvetica", "sans-serif"],
+            vuxDisplay: ["Raleway", "Arial", "Helvetica", "sans-serif"],
+            servanetHeader: ["Poppins", "Arial", "Helvetica", "sans-serif"],
+            servanetDisplay: ["Poppins", "Arial", "Helvetica", "sans-serif"],
           },
         },
       },

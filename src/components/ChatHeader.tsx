@@ -43,6 +43,15 @@ export const ChatHeader = ({ fullscreen, setFullscreen, open, setOpen }) => {
         >
           <Logo size={open ? 30 : 36} bgColor={"transparent"} />
         </div>
+      ) : import.meta.env.VITE_APPLICATION === "SERVANET" ? (
+        <div
+          className={cx(
+            `rounded-12 flex items-center justify-center`,
+            open ? "w-[3.2rem] h-[3.2rem]" : "w-[4rem] h-[4rem]"
+          )}
+        >
+          <Logo size={open ? 32 : 40} bgColor={"transparent"} />
+        </div>
       ) : null}
       <div className="h-full flex-grow leading-none flex flex-col justify-around gap-2">
         <p className="font-bold p-0 !m-0 mt-2">
