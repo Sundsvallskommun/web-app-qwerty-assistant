@@ -107,7 +107,7 @@ export const Assistant = () => {
     <>
       <div
         className={cx(
-          `fixed right-0 bottom-0 shadow-2xl transition-all flex flex-row max-h-full sm:max-h-[95vh] z-popover`,
+          `bg-white fixed right-0 top-0 sm:top-[unset] sm:bottom-0 shadow-2xl transition-all flex flex-row max-h-svh sm:max-h-[95vh] z-popover`,
           open
             ? fullscreen
               ? "w-full h-full max-h-screen"

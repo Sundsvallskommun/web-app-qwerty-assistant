@@ -80,7 +80,7 @@ export const ChatWindow = ({
   return (
     <>
       <div
-        className="flex-grow p-[16px] pb-[24px] bg-background-content flex flex-col overflow-y-scroll"
+        className="flex-grow p-[16px] pb-[24px] bg-background-content flex flex-col overflow-y-scroll my-0"
         aria-live="polite"
         aria-atomic={false}
       >
@@ -206,7 +206,8 @@ export const ChatWindow = ({
         )}
         <div ref={scrollRef}></div>
       </div>
-      <div className="mx-md border-0 border-t-1 border-solid border-gray-100 h-[64px] flex items-center justify-around gap-sm bg-background-content flex-shrink-0">
+      {/* <div className="bg-conten-primary"> */}
+      <div className="px-md m-0 border-0 border-t-1 border-solid border-gray-100 h-[64px] flex items-center justify-around gap-sm bg-background-content flex-shrink-0">
         <FormControl id="query" className="w-4/5">
           <FormLabel className="sr-only">
             {showHistory
@@ -241,6 +242,7 @@ export const ChatWindow = ({
           {done ? <span>Skicka</span> : <Spinner size={2} />}
         </Button>
       </div>
+      {/* </div> */}
     </>
   );
 };
