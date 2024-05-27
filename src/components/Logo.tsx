@@ -1,25 +1,21 @@
 import { cx } from "@sk-web-gui/react";
+import servanetlogo from "./logos/servanetlogo.png";
+import qwertylogo from "./logos/assistanticon.png";
 
 export const Logo = ({ size, bgColor }) => {
-  const APP_BASE_URL = new URL(window.location.href).pathname.replace(
-    /\/$/,
-    ""
-  );
-  const servanetLogoUrl = `${APP_BASE_URL}/assets/servanetlogo.png`;
-  const qwertyLogoUrl = `${APP_BASE_URL}/assets/assistanticon.png`;
   return import.meta.env.VITE_APPLICATION === "SERVANET" ? (
     <div
       className={cx(
-        `bg-white rounded-12 border-1 bg-servanetlogo2 bg-center bg-contain w-full h-full`
+        `bg-white rounded-10 border-1 bg-center bg-contain w-full h-full`
       )}
-      style={{ backgroundImage: `url(${servanetLogoUrl})` }}
+      style={{ backgroundImage: `url(${servanetlogo})` }}
     ></div>
   ) : import.meta.env.VITE_APPLICATION === "QWERTY" ? (
     <div
       className={cx(
-        `bg-white rounded-12 border-1 bg-center bg-contain w-full h-full`
+        `bg-white rounded-10 border-1 bg-center bg-contain w-full h-full`
       )}
-      style={{ backgroundImage: `url(${qwertyLogoUrl})` }}
+      style={{ backgroundImage: `url(${qwertylogo})` }}
     ></div>
   ) : (
     <svg
