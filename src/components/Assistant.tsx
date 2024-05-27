@@ -25,7 +25,7 @@ export const Assistant = () => {
   const { assistant, assistantId, sessionId, setSessionId, user, hash } =
     useAppContext();
   const [open, setOpen] = useState(false);
-  const { history, sendQuery, addHistoryEntry, clearHistory, done } = useChat();
+  const { sendQuery, addHistoryEntry, clearHistory, done } = useChat();
   const [fullscreen, setFullscreen] = useState(false);
   const [selectedSession, setSelectedSession] = useState<SessionPublic>(null);
   const [assistants, setAssistants] = useState<AssistantPublic[]>([]);
@@ -110,8 +110,8 @@ export const Assistant = () => {
           `bg-white fixed right-0 top-0 sm:top-[unset] sm:bottom-0 shadow-2xl transition-all flex flex-row max-h-svh sm:max-h-[95vh] z-popover`,
           open
             ? fullscreen
-              ? "w-full h-full max-h-screen"
-              : "w-full h-full sm:w-[425px] sm:h-[632px]"
+              ? "top-0 w-full h-full max-h-screen"
+              : "top-0 w-full h-full sm:w-[425px] sm:h-[632px]"
             : "w-full sm:w-[306px] sm:h-[62px]"
         )}
       >
