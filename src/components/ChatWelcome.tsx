@@ -22,7 +22,7 @@ export const ChatWelcome = ({
       <div className="flex-grow flex flex-col items-center justify-center px-20">
         <div
           className={cx(
-            `flex items-center justify-center h-[72px] w-[72px] rounded-12`,
+            `flex items-center justify-center h-72 w-72 rounded-12`,
             brandLogoBackgroundColor
           )}
         >

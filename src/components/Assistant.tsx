@@ -111,8 +111,8 @@ export const Assistant = () => {
           open
             ? fullscreen
               ? "w-full h-full max-h-screen"
-              : "w-full h-full sm:w-[425px] sm:h-[632px]"
-            : "w-full sm:w-[306px] sm:h-[62px]"
+              : "w-full h-full sm:w-[42.5rem] sm:h-[63.2rem]"
+            : "w-full sm:w-[30.6rem] sm:h-62"
         )}
       >
         {isMaximizable() && open && fullscreen && (

@@ -42,7 +42,7 @@ export const ChatSidebar = ({
           .map((s: SessionPublic) => (
             <div
               key={s.id}
-              className="flex items-center gap-4 cursor-pointer bg-gray-200 hover:bg-gray-300 p-8 rounded-6 whitespace-nowrap max-w-[200px] truncate"
+              className="flex items-center gap-4 cursor-pointer bg-gray-200 hover:bg-gray-300 p-8 rounded-6 whitespace-nowrap max-w-[20rem] truncate"
               onClick={() => {
                 setSessionId(s.id);
               }}
@@ -57,11 +57,11 @@ export const ChatSidebar = ({
   );
 
   return (
-    <aside className="w-[480px] border-r flex">
+    <aside className="w-[48rem] border-r flex">
       <div
         className={cx(
           `absolute h-full px-16 py-24 bg-primitives-gray-900 text-[#E5E5E5] flex flex-col items-start justify-start gap-16 transition-all`,
-          expanded ? "w-[272px]" : "w-[72px]"
+          expanded ? "w-[272" : "w-72"
         )}
       >
         <div className="w-full mb-md text-white flex items-center justify-between self-end">
@@ -89,7 +89,7 @@ export const ChatSidebar = ({
             leftIcon={
               <div
                 className={cx(
-                  `border border-black bg-[#65b88f] rounded-12 bg-assistant bg-center bg-contain w-[40px] h-[40px]`
+                  `border border-black bg-[#65b88f] rounded-12 bg-assistant bg-center bg-contain w-40 h-40`
                 )}
               ></div>
             }
@@ -142,7 +142,7 @@ export const ChatSidebar = ({
           <Icon name="arrow-down-left" size={20} />
         </Button>
       </div>
-      <div className="flex-grow w-[408px] pl-[96px] py-[24px] bg-background-content flex flex-col overflow-y-scroll">
+      <div className="flex-grow w-[40.8rem] pl-[9.6rem] py-24 bg-background-content flex flex-col overflow-y-scroll">
         <div className="flex flex-col gap-12 items-start">
           <div
             className="flex items-center gap-4 cursor-pointer bg-blue-200 hover:bg-blue-300 p-8 rounded-6 whitespace-nowrap"

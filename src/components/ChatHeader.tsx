@@ -10,12 +10,12 @@ export const ChatHeader = ({ fullscreen, setFullscreen, open, setOpen }) => {
       className={cx(
         "flex justify-between items-center gap-5 cursor-default",
         open && fullscreen
-          ? "h-[72px] rounded-0 bg-background-content text-primitives-gray-900"
-          : "h-[62px] rounded-0 sm:rounded-tl-16 bg-primitives-gray-900 text-[#E5E5E5]",
+          ? "h-72 rounded-0 bg-background-content text-primitives-gray-900"
+          : "h-[6.2rem] rounded-0 sm:rounded-tl-16 bg-primitives-gray-900 text-[#E5E5E5]",
         open
           ? fullscreen
-            ? "p-[20px]"
-            : "p-[15px] cursor-pointer"
+            ? "p-[2rem]"
+            : "p-[1.5rem] cursor-pointer"
           : "p-10 cursor-pointer"
       )}
       role="button"
@@ -31,14 +31,14 @@ export const ChatHeader = ({ fullscreen, setFullscreen, open, setOpen }) => {
         <div
           className={cx(
             `bg-[#65b88f] rounded-12 bg-assistant bg-center bg-contain`,
-            open ? "w-[32px] h-32" : "w-[40px] h-[40px]"
+            open ? "w-32 h-32" : "w-40 h-40"
           )}
         ></div>
       ) : import.meta.env.VITE_APPLICATION === "VUX" ? (
         <div
           className={cx(
             `bg-gronsta-surface-primary dark:bg-gronsta-background-200 rounded-12 flex items-center justify-center`,
-            open ? "w-[32px] h-32" : "w-[40px] h-[40px]"
+            open ? "w-32 h-32" : "w-40 h-40"
           )}
         >
           <Logo size={open ? 30 : 36} bgColor={"transparent"} />
@@ -47,7 +47,7 @@ export const ChatHeader = ({ fullscreen, setFullscreen, open, setOpen }) => {
         <div
           className={cx(
             `rounded-12 flex items-center justify-center`,
-            open ? "w-[3.2rem] h-[3.2rem]" : "w-[4rem] h-[4rem]"
+            open ? "w-32 h-32" : "w-[4rem] h-[4rem]"
           )}
         >
           <Logo size={open ? 32 : 40} bgColor={"transparent"} />
