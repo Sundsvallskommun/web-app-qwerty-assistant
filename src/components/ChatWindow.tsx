@@ -27,7 +27,7 @@ export const ChatWindow = ({
   sendQuery: (q: string) => void;
 }) => {
   const showReferences = true;
-  const { chatText, chatName, brandWeight } = getStyles();
+  const { chatText, chatName, brandText, brandWeight } = getStyles();
   const [query, setQuery] = useState("");
   const { history, clearHistory, done } = useChat();
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -235,7 +235,7 @@ export const ChatWindow = ({
         </FormControl>
 
         <Button
-          className="p-8 hover:opacity-90"
+          className={cx(`p-8 hover:opacity-90`, brandText, brandWeight)}
           disabled={!assistantId || !query || query.trim() === ""}
           onClick={() => {
             handleQuerySubmit(query);
