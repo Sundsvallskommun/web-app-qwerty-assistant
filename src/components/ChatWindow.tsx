@@ -19,6 +19,7 @@ import { MarkdownRendered } from "./MarkdownRendered";
 import { useAppContext } from "../context/app.context";
 import useChat from "../hooks/useChat";
 import { Feedback } from "./Feedback";
+import { getStyles } from "../services/config-service";
 
 export const ChatWindow = ({
   sendQuery,
@@ -26,6 +27,7 @@ export const ChatWindow = ({
   sendQuery: (q: string) => void;
 }) => {
   const showReferences = true;
+  const { chatText, chatName, brandWeight } = getStyles();
   const [query, setQuery] = useState("");
   const { history, clearHistory, done } = useChat();
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -110,7 +112,7 @@ export const ChatWindow = ({
             {history.map((msg, idx) => (
               <div
                 key={`history-${idx}`}
-                className="mb-24 flex items-start gap-12"
+                className={cx(`mb-24 flex items-start gap-12 ${chatText}`)}
               >
                 <div aria-hidden={true}>
                   {msg.origin === "assistant" ? (
@@ -133,9 +135,11 @@ export const ChatWindow = ({
                   className="max-w-[85%] break-words"
                 >
                   {msg.origin === "assistant" || msg.origin === "system" ? (
-                    <strong>{import.meta.env.VITE_ASSISTANT_NAME}</strong>
+                    <span className={cx(`${chatName}`)}>
+                      {import.meta.env.VITE_ASSISTANT_NAME}
+                    </span>
                   ) : (
-                    <strong>Du</strong>
+                    <span className={cx(`sr-only ${chatName}`)}>Du</span>
                   )}
                   <div
                     className={cx(
@@ -158,7 +162,9 @@ export const ChatWindow = ({
                       <Accordion.Item
                         className="bg-gray-100 border-1 border-gray-100 rounded-12 pl-20 pr-12 dark:text-black"
                         header={
-                          <span className="dark:text-black">
+                          <span
+                            className={cx(`dark:text-black ${brandWeight}`)}
+                          >
                             Kunskapskällor ({msg.references?.length || 0})
                           </span>
                         }

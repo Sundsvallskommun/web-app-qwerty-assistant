@@ -14,8 +14,15 @@ export const ChatWelcome = ({
 }) => {
   const { assistantId } = useAppContext();
   const { header, subHeader, faqs } = getContent();
-  const { brandButtons, brandLogoBackgroundColor, brandText, brandHeader } =
-    getStyles();
+  const {
+    brandButtons,
+    brandLogoBackgroundColor,
+    brandText,
+    brandWeight,
+    brandHeader,
+    faqText,
+    brandSansSerif,
+  } = getStyles();
 
   return (
     <div className="w-full h-full flex flex-col justify-between">
@@ -28,18 +35,24 @@ export const ChatWelcome = ({
         >
           <Logo size={72} bgColor={"transparent"} />
         </div>
-        <div className={cx(`text-center mt-16 ${brandText}`)}>
-          <h4 className={cx(`${brandText}`)}>
+        <div className={cx(`text-center mt-16`)}>
+          <h4 className={cx(`${brandText} ${brandWeight}`)}>
             {import.meta.env.VITE_ASSISTANT_NAME}
           </h4>
-          <p className="my-4 text-small !font-normal">{subHeader}</p>
+          <p className={cx(`my-4 text-small !font-normal ${brandSansSerif}`)}>
+            {subHeader}
+          </p>
         </div>
       </div>
       <div className="flex flex-col gap-8 items-start">
-        <h5 className={cx(`text-large font-bold ${brandText}`)}>
+        <h5 className={cx(`text-large ${brandText} ${brandWeight}`)}>
           Vanliga frågor
         </h5>
-        <ul className="md:flex flex-col justify-center items-start self-stretch gap-12">
+        <ul
+          className={cx(
+            `md:flex flex-col justify-center items-start self-stretch gap-12 ${faqText}`
+          )}
+        >
           {faqs.map((s, idx) => (
             <li key={idx}>
               <Button
