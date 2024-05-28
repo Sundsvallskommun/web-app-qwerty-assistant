@@ -212,7 +212,12 @@ export const ChatWindow = ({
         )}
         <div ref={scrollRef}></div>
       </div>
-      <div className="mx-md border-0 border-t-1 border-solid border-gray-100 h-64 flex items-center justify-around gap-sm bg-background-content flex-shrink-0">
+      <div
+        className={cx(
+          `mx-md border-0 border-t-1 border-solid border-gray-100 h-64 flex items-center justify-around gap-sm bg-background-content flex-shrink-0`,
+          brandText
+        )}
+      >
         <FormControl id="query" className="w-4/5">
           <FormLabel className="sr-only">
             {showHistory
