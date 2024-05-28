@@ -50,7 +50,7 @@ export const ChatWelcome = ({
         </h5>
         <ul
           className={cx(
-            `md:flex flex-col justify-center items-start self-stretch gap-12 ${faqText}`
+            `flex flex-col justify-center items-start self-stretch gap-12 ${faqText}`
           )}
         >
           {faqs.map((s, idx) => (
