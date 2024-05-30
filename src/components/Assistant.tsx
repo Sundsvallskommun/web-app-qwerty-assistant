@@ -112,7 +112,8 @@ export const Assistant = () => {
           open
             ? fullscreen
               ? "w-full h-full max-h-dvh"
-              : "w-full h-full sm:w-[42.5rem] sm:h-[63.2rem]"
+              : // : "w-full h-full sm:w-[42.5rem] sm:h-[63.2rem]"
+                "top-0 left-0 sm:top-[unset] sm:left-[unset] sm:w-[42.5rem] sm:h-[63.2rem]"
             : "w-full sm:w-[30.6rem] sm:h-62"
         )}
       >
