@@ -108,14 +108,17 @@ export const Assistant = () => {
     <>
       <div
         className={cx(
-          `fixed bg-white rounded-tl-16 right-0 bottom-0 shadow-2xl transition-all flex flex-row max-h-full sm:max-h-[95dvh] z-[20000000]`,
-          open
-            ? fullscreen
-              ? "w-full h-full max-h-dvh"
-              : // : "w-full h-full sm:w-[42.5rem] sm:h-[63.2rem]"
-                "top-0 left-0 sm:top-[unset] sm:left-[unset] sm:w-[42.5rem] sm:h-[63.2rem]"
-            : "w-full sm:w-[30.6rem] sm:h-62"
+          `w-full bg-white rounded-tl-16 fixed right-0 bottom-0 shadow-2xl transition-all flex flex-row sm:max-h-[95dvh] z-[20000000] bg-green-200`,
+          open ? "h-full" : null
         )}
+        // className={cx(
+        //   `fixed bg-white rounded-tl-16 right-0 bottom-0 shadow-2xl transition-all flex flex-row sm:max-h-[95dvh] z-[20000000]`,
+        //   open
+        //     ? fullscreen
+        //       ? "w-full h-full max-h-dvh"
+        //       : "w-full h-full sm:w-[42.5rem] sm:h-[63.2rem]"
+        //     : "w-full sm:w-[30.6rem] sm:h-62"
+        // )}
       >
         {isMaximizable() && open && fullscreen && (
           <ChatSidebar
@@ -127,12 +130,12 @@ export const Assistant = () => {
         )}
         <div
           className={cx(
-            `max-h-full flex flex-col justify-between`,
-            open
-              ? fullscreen
-                ? "w-full h-full max-h-dvh"
-                : "w-full h-full"
-              : "w-full h-full"
+            `max-h-full flex flex-col justify-between w-full h-full bg-red-200`
+            // open
+            //   ? fullscreen
+            //     ? "w-full h-full max-h-dvh"
+            //     : "w-full h-full"
+            //   : "w-full h-full"
           )}
         >
           <ChatHeader

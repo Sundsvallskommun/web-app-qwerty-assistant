@@ -80,9 +80,10 @@ export const ChatWindow = ({
     idx === history.length - 1 && msg.origin === "assistant" ? !done : false;
 
   return (
-    <>
+    <div className="max-h-full">
       <div
-        className="flex-grow p-16 pb-24 bg-background-content flex flex-col overflow-y-scroll"
+        // className="p-16 pb-24 bg-background-content flex-grow flex flex-col justify-end overflow-y-scroll"
+        className="p-16 pb-24 bg-background-content flex-grow flex flex-col justify-start overflow-y-scroll max-h-[calc(100dvh-12.6rem)]"
         aria-live="polite"
         aria-atomic={false}
       >
@@ -252,6 +253,6 @@ export const ChatWindow = ({
           {done ? <span>Skicka</span> : <Spinner size={2} />}
         </Button>
       </div>
-    </>
+    </div>
   );
 };
