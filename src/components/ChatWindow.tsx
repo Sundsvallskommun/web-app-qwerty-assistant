@@ -229,6 +229,8 @@ export const ChatWindow = ({
             </FormLabel>
             <Input
               ref={inputRef}
+              className="placeholder-dark-secondary"
+              placeholder={import.meta.env.VITE_ASSISTANT_PLACEHOLDER}
               type="text"
               value={query}
               onKeyDown={(e) => {
