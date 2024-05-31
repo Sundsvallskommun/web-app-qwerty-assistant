@@ -81,181 +81,183 @@ export const ChatWindow = ({
     idx === history.length - 1 && msg.origin === "assistant" ? !done : false;
 
   return (
-    <div className="max-h-full">
-      <div
-        className="p-16 pb-24 bg-background-content flex-grow flex flex-col justify-start overflow-y-scroll max-h-[calc(100dvh-12.6rem)] sm:max-h-[calc(95dvh-12.6rem)]"
-        aria-live="polite"
-        aria-atomic={false}
-      >
-        {showHistory ? (
-          <div className="relative">
-            <Button
-              title="Stäng sökresultat"
-              iconButton
-              aria-label="Stäng sökresultat"
-              size="sm"
-              variant="tertiary"
-              onClick={clearHistory}
-              className="xs:hidden sm:flex absolute right-12 top-12 p-8 rounded-full flex items-center justify-center"
-            >
-              <Icon name={"x"} />
-            </Button>
-          </div>
-        ) : null}
-        {!showHistory ? (
-          <ChatWelcome
-            setQuery={setQuery}
-            handleQuerySubmit={handleQuerySubmit}
-            inputRef={inputRef}
-            buttonRef={buttonRef}
-          />
-        ) : (
-          <div>
-            {history.map((msg, idx) => (
-              <div
-                key={`history-${idx}`}
-                className={cx(`mb-24 flex items-start gap-12 ${chatText}`)}
-              >
-                <div aria-hidden={true}>
-                  {msg.origin === "assistant" ? (
-                    <AssistantAvatar />
-                  ) : msg.origin === "system" ? (
-                    <AssistantAvatar />
-                  ) : (
-                    <UserAvatar />
-                  )}
-                </div>
-                {idx === history.length - 1 &&
-                msg.origin === "assistant" &&
-                showLoading ? (
-                  <div className="sr-only" aria-live="polite">
-                    Inväntar svar
-                  </div>
-                ) : null}
-                <div
-                  aria-hidden={messageIsAriaHidden(idx, history, done, msg)}
-                  className="max-w-[85%] break-words"
-                >
-                  {msg.origin === "assistant" || msg.origin === "system" ? (
-                    <span className={cx(`${chatName}`)}>
-                      {import.meta.env.VITE_ASSISTANT_NAME}
-                    </span>
-                  ) : (
-                    <span className={cx(`sr-only ${chatName}`)}>Du</span>
-                  )}
-                  <div
-                    className={cx(
-                      msg.origin === "system" ? `text-error` : null
-                    )}
-                  >
-                    <MarkdownRendered
-                      text={msg.text}
-                      messageId={msg.id}
-                      hideElements={messageIsAriaHidden(
-                        idx,
-                        history,
-                        done,
-                        msg
-                      )}
-                    />
-                  </div>
-                  {showReferences && msg.references?.length > 0 ? (
-                    <Accordion size="sm" className="mt-20 p-0">
-                      <Accordion.Item
-                        className="bg-gray-100 border-1 border-gray-100 rounded-12 pl-20 pr-12 dark:text-black"
-                        header={
-                          <span
-                            className={cx(`dark:text-black ${brandWeight}`)}
-                          >
-                            Kunskapskällor ({msg.references?.length || 0})
-                          </span>
-                        }
-                      >
-                        <ul aria-label="Kunskapskällor">
-                          {msg.references?.map((r, i) => (
-                            <li
-                              className="max-w-full w-full my-8 rounded-6 whitespace-normal text-base"
-                              key={`ref-${i}-${idx}`}
-                            >
-                              <small>
-                                <Link
-                                  external
-                                  href={r.url}
-                                  className="dark:text-black"
-                                >
-                                  {r.title}
-                                </Link>
-                              </small>
-                            </li>
-                          ))}
-                        </ul>
-                      </Accordion.Item>
-                    </Accordion>
-                  ) : null}
-                  {done ? (
-                    <Feedback
-                      history={history}
-                      msg={msg}
-                      idx={idx}
-                      scrollRef={scrollRef}
-                      inputRef={inputRef}
-                    />
-                  ) : null}
-                </div>
-              </div>
-            ))}
-            <div aria-live={"polite"} className="sr-only">
-              <MarkdownRendered
-                tabbable={false}
-                text={sanitized(lastMessage)}
-              />
-            </div>
-          </div>
-        )}
-        <div ref={scrollRef}></div>
-      </div>
-      <div
-        className={cx(
-          `mx-md border-0 border-t-1 border-solid border-gray-100 h-64 flex items-center justify-around gap-sm bg-background-content flex-shrink-0`,
-          brandText
-        )}
-      >
-        <FormControl id="query" className="w-4/5">
-          <FormLabel className="sr-only">
-            {showHistory
-              ? "Ställ en följdfråga"
-              : `Ställ en fråga till ${import.meta.env.VITE_ASSISTANT_NAME}`}
-          </FormLabel>
-          <Input
-            ref={inputRef}
-            type="text"
-            value={query}
-            onKeyDown={(e) => {
-              if (e.code === "Enter") {
-                handleQuerySubmit();
-              }
-            }}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setQuery(e.target.value)
-            }
-          />
-        </FormControl>
-
-        <Button
-          ref={buttonRef}
-          variant={done ? "primary" : "tertiary"}
-          className={cx(`p-8 hover:opacity-90`, brandText, brandWeight)}
-          disabled={!assistantId} // || !query || query.trim() === ""}
-          onClick={() => {
-            handleQuerySubmit(query);
-            setQuery("");
-            buttonRef.current?.focus();
-          }}
-          size="md"
+    <>
+      {showHistory ? (
+        <div className="absolute right-0 top-64">
+          <Button
+            title="Stäng sökresultat"
+            iconButton
+            aria-label="Stäng sökresultat"
+            size="sm"
+            variant="tertiary"
+            onClick={clearHistory}
+            className="sm:flex absolute right-12 top-12 p-8 rounded-full flex items-center justify-center"
+          >
+            <Icon name={"x"} />
+          </Button>
+        </div>
+      ) : null}
+      <div className="max-h-full">
+        <div
+          className="p-16 pb-24 bg-background-content flex-grow flex flex-col justify-start overflow-y-auto max-h-[calc(100dvh-12.6rem)] sm:max-h-[min(calc(95dvh-12.6rem),calc(63.2rem-12.6rem))]"
+          aria-live="polite"
+          aria-atomic={false}
         >
-          {done ? <span>Skicka</span> : <Spinner size={2} />}
-        </Button>
+          {!showHistory ? (
+            <ChatWelcome
+              setQuery={setQuery}
+              handleQuerySubmit={handleQuerySubmit}
+              inputRef={inputRef}
+              buttonRef={buttonRef}
+            />
+          ) : (
+            <div>
+              {history.map((msg, idx) => (
+                <div
+                  key={`history-${idx}`}
+                  className={cx(`mb-24 flex items-start gap-12 ${chatText}`)}
+                >
+                  <div aria-hidden={true}>
+                    {msg.origin === "assistant" ? (
+                      <AssistantAvatar />
+                    ) : msg.origin === "system" ? (
+                      <AssistantAvatar />
+                    ) : (
+                      <UserAvatar />
+                    )}
+                  </div>
+                  {idx === history.length - 1 &&
+                  msg.origin === "assistant" &&
+                  showLoading ? (
+                    <div className="sr-only" aria-live="polite">
+                      Inväntar svar
+                    </div>
+                  ) : null}
+                  <div
+                    aria-hidden={messageIsAriaHidden(idx, history, done, msg)}
+                    className="max-w-[85%] break-words"
+                  >
+                    {msg.origin === "assistant" || msg.origin === "system" ? (
+                      <span className={cx(`${chatName}`)}>
+                        {import.meta.env.VITE_ASSISTANT_NAME}
+                      </span>
+                    ) : (
+                      <span className={cx(`sr-only ${chatName}`)}>Du</span>
+                    )}
+                    <div
+                      className={cx(
+                        msg.origin === "system" ? `text-error` : null
+                      )}
+                    >
+                      <MarkdownRendered
+                        text={msg.text}
+                        messageId={msg.id}
+                        hideElements={messageIsAriaHidden(
+                          idx,
+                          history,
+                          done,
+                          msg
+                        )}
+                      />
+                    </div>
+                    {showReferences && msg.references?.length > 0 ? (
+                      <Accordion size="sm" className="mt-20 p-0">
+                        <Accordion.Item
+                          className="bg-gray-100 border-1 border-gray-100 rounded-12 pl-20 pr-12 dark:text-black"
+                          header={
+                            <span
+                              className={cx(`dark:text-black ${brandWeight}`)}
+                            >
+                              Kunskapskällor ({msg.references?.length || 0})
+                            </span>
+                          }
+                        >
+                          <ul aria-label="Kunskapskällor">
+                            {msg.references?.map((r, i) => (
+                              <li
+                                className="max-w-full w-full my-8 rounded-6 whitespace-normal text-base"
+                                key={`ref-${i}-${idx}`}
+                              >
+                                <small>
+                                  <Link
+                                    external
+                                    href={r.url}
+                                    className="dark:text-black"
+                                  >
+                                    {r.title}
+                                  </Link>
+                                </small>
+                              </li>
+                            ))}
+                          </ul>
+                        </Accordion.Item>
+                      </Accordion>
+                    ) : null}
+                    {done ? (
+                      <Feedback
+                        history={history}
+                        msg={msg}
+                        idx={idx}
+                        scrollRef={scrollRef}
+                        inputRef={inputRef}
+                      />
+                    ) : null}
+                  </div>
+                </div>
+              ))}
+              <div aria-live={"polite"} className="sr-only">
+                <MarkdownRendered
+                  tabbable={false}
+                  text={sanitized(lastMessage)}
+                />
+              </div>
+            </div>
+          )}
+          <div ref={scrollRef}></div>
+        </div>
+        <div
+          className={cx(
+            `mx-md border-0 border-t-1 border-solid border-gray-100 h-64 flex items-center justify-around gap-sm bg-background-content flex-shrink-0`,
+            brandText
+          )}
+        >
+          <FormControl id="query" className="w-4/5">
+            <FormLabel className="sr-only">
+              {showHistory
+                ? "Ställ en följdfråga"
+                : `Ställ en fråga till ${import.meta.env.VITE_ASSISTANT_NAME}`}
+            </FormLabel>
+            <Input
+              ref={inputRef}
+              type="text"
+              value={query}
+              onKeyDown={(e) => {
+                if (e.code === "Enter") {
+                  handleQuerySubmit();
+                }
+              }}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setQuery(e.target.value)
+              }
+            />
+          </FormControl>
+
+          <Button
+            ref={buttonRef}
+            variant={done ? "primary" : "tertiary"}
+            className={cx(`p-8 hover:opacity-90`, brandText, brandWeight)}
+            disabled={!assistantId} // || !query || query.trim() === ""}
+            onClick={() => {
+              handleQuerySubmit(query);
+              setQuery("");
+              buttonRef.current?.focus();
+            }}
+            size="md"
+          >
+            {done ? <span>Skicka</span> : <Spinner size={2} />}
+          </Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
