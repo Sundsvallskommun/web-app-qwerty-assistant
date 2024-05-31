@@ -28,7 +28,7 @@ export const ChatWelcome = ({
 
   return (
     <div className="w-full h-full flex flex-col justify-between">
-      <div className="flex-grow flex flex-col items-center justify-center px-20">
+      <div className="flex-grow flex flex-col items-center justify-center px-20 mb-xl">
         <div
           className={cx(
             `flex items-center justify-center h-72 w-72 rounded-12`,
