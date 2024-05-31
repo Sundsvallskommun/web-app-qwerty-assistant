@@ -7,10 +7,12 @@ export const ChatWelcome = ({
   setQuery,
   handleQuerySubmit,
   inputRef,
+  buttonRef,
 }: {
   setQuery: (s) => void;
   handleQuerySubmit: (s: string) => void;
   inputRef: React.MutableRefObject<HTMLInputElement>;
+  buttonRef: React.MutableRefObject<HTMLButtonElement>;
 }) => {
   const { assistantId } = useAppContext();
   const { header, subHeader, faqs } = getContent();
@@ -62,7 +64,7 @@ export const ChatWelcome = ({
                   setQuery(s);
                   handleQuerySubmit(s);
                   setQuery("");
-                  inputRef.current?.focus();
+                  buttonRef.current?.focus();
                 }}
                 className={cx(
                   `p-12 font-semibold text-grey-900 text-small flex items-center justify-around gap-12 rounded-bl-0`,

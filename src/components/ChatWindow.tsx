@@ -32,6 +32,7 @@ export const ChatWindow = ({
   const { history, clearHistory, done } = useChat();
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const [lastMessage, setLastMessage] = useState("");
   const { assistantId } = useAppContext();
   const [showLoading, setShowLoading] = useState<boolean>(false);
@@ -82,8 +83,7 @@ export const ChatWindow = ({
   return (
     <div className="max-h-full">
       <div
-        // className="p-16 pb-24 bg-background-content flex-grow flex flex-col justify-end overflow-y-scroll"
-        className="p-16 pb-24 bg-background-content flex-grow flex flex-col justify-start overflow-y-scroll max-h-[calc(100dvh-12.6rem)]"
+        className="p-16 pb-24 bg-background-content flex-grow flex flex-col justify-start overflow-y-scroll max-h-[calc(100dvh-12.6rem)] sm:max-h-[calc(95dvh-12.6rem)]"
         aria-live="polite"
         aria-atomic={false}
       >
@@ -107,6 +107,7 @@ export const ChatWindow = ({
             setQuery={setQuery}
             handleQuerySubmit={handleQuerySubmit}
             inputRef={inputRef}
+            buttonRef={buttonRef}
           />
         ) : (
           <div>
@@ -241,12 +242,14 @@ export const ChatWindow = ({
         </FormControl>
 
         <Button
+          ref={buttonRef}
+          variant={done ? "primary" : "tertiary"}
           className={cx(`p-8 hover:opacity-90`, brandText, brandWeight)}
-          disabled={!assistantId || !query || query.trim() === ""}
+          disabled={!assistantId} // || !query || query.trim() === ""}
           onClick={() => {
             handleQuerySubmit(query);
             setQuery("");
-            inputRef.current?.focus();
+            buttonRef.current?.focus();
           }}
           size="md"
         >
