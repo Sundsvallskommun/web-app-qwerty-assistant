@@ -5,11 +5,16 @@ interface Content {
 }
 
 interface Styles {
-  brandColor: string;
   brandLogoBackgroundColor: string;
+  brandColor: string;
   brandButtonColor: string;
   brandHeader: string;
   brandText: string;
+  brandWeight: string;
+  chatText: string;
+  chatName: string;
+  faqText: string;
+  brandSansSerif: string;
   brandRadius: string;
   brandWidth: string;
   brandMaxWidth: string;
@@ -31,6 +36,10 @@ const VuxContent: Content = {
 const VuxStyles: Partial<Styles> = {
   brandLogoBackgroundColor:
     "bg-gronsta-surface-primary dark:bg-gronsta-background-200",
+  brandText: "font-vuxDisplay",
+  brandWeight: "font-bold",
+  chatName: "font-bold",
+  faqText: "font-medium",
 };
 
 const ServanetContent: Content = {
@@ -48,7 +57,12 @@ const ServanetStyles: Partial<Styles> = {
   brandLogoBackgroundColor: "bg-content-primary",
   brandButtonColor: "bg-[#66677B]",
   brandHeader: "!font-medium font-servanetHeader",
-  brandText: "!font-semibold font-servanetDisplay",
+  brandText: "font-servanetDisplay",
+  brandSansSerif: "font-servanetDisplay",
+  brandWeight: "font-semibold",
+  chatText: "font-servanetDisplay tracking-[-.16px]",
+  chatName: "font-semibold text-large",
+  faqText: "font-servanetDisplay font-medium",
   brandRadius: "rounded-6",
   brandWidth: "xl:w-[66rem]",
   brandMaxWidth: "max-w-[66rem]",
@@ -62,7 +76,12 @@ const defaultStyles: Styles = {
     "bg-vattjom-surface-primary dark:bg-vattjom-background-200",
   brandButtonColor: "",
   brandHeader: "!font-extrabold font-header",
-  brandText: "font-bold",
+  brandText: "",
+  brandWeight: "font-bold",
+  chatText: "",
+  chatName: "",
+  faqText: "",
+  brandSansSerif: "",
   brandRadius: "rounded-18",
   brandWidth: "xl:w-[64rem]",
   brandMaxWidth: "max-w-[64rem]",

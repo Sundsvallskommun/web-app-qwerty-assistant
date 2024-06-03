@@ -1,3 +1,4 @@
+import * as uuid from "uuid";
 import { cx } from "@sk-web-gui/react";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/app.context";
@@ -87,8 +88,8 @@ export const Assistant = () => {
     setSessionId(selectedSession?.id);
     if (selectedSession) {
       selectedSession?.messages?.slice().forEach((m) => {
-        const answerId = crypto.randomUUID();
-        const questionId = crypto.randomUUID();
+        const answerId = uuid.v4();
+        const questionId = uuid.v4();
         addHistoryEntry("user", m.question, questionId);
         addHistoryEntry(
           "assistant",
@@ -107,13 +108,19 @@ export const Assistant = () => {
     <>
       <div
         className={cx(
-          `fixed bg-white rounded-tl-16 right-0 bottom-0 shadow-2xl transition-all flex flex-row max-h-full sm:max-h-[95vh] z-popover`,
+          `bg-white rounded-tl-16 fixed right-0 bottom-0 shadow-2xl transition-all flex flex-row sm:max-h-[95dvh] z-[20000000]`,
           open
-            ? fullscreen
-              ? "w-full h-full max-h-screen"
-              : "w-full h-full sm:w-[42.5rem] sm:h-[63.2rem]"
+            ? "w-full h-full sm:w-[42.5rem] sm:h-[63.2rem]"
             : "w-full sm:w-[30.6rem] sm:h-62"
         )}
+        // className={cx(
+        //   `fixed bg-white rounded-tl-16 right-0 bottom-0 shadow-2xl transition-all flex flex-row sm:max-h-[95dvh] z-[20000000]`,
+        //   open
+        //     ? fullscreen
+        //       ? "w-full h-full max-h-dvh"
+        //       : "w-full h-full sm:w-[42.5rem] sm:h-[63.2rem]"
+        //     : "w-full sm:w-[30.6rem] sm:h-62"
+        // )}
       >
         {isMaximizable() && open && fullscreen && (
           <ChatSidebar
@@ -125,12 +132,12 @@ export const Assistant = () => {
         )}
         <div
           className={cx(
-            `max-h-full flex flex-col justify-between`,
-            open
-              ? fullscreen
-                ? "w-full h-full max-h-screen"
-                : "w-full h-full"
-              : "w-full h-full"
+            `max-h-full flex flex-col justify-between w-full h-full`
+            // open
+            //   ? fullscreen
+            //     ? "w-full h-full max-h-dvh"
+            //     : "w-full h-full"
+            //   : "w-full h-full"
           )}
         >
           <ChatHeader
