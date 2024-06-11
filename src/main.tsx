@@ -52,6 +52,7 @@ class CustomAppComponent extends HTMLElement {
       }
       const rootElement = document.getElementById("qwertyroot");
       if (rootElement) {
+        rootElement.className = "qwertyshadow";
         initializeReactApp(rootElement);
       } else {
         console.error("Root element for React app not found.");
@@ -73,5 +74,6 @@ if (tagElement && !tagElement.getAttribute("id")) {
 }
 const topLevel = document.getElementById("qwertyroot") as HTMLElement;
 if (topLevel) {
+  topLevel.className = "qwertyshadow";
   initializeReactApp(topLevel);
 }
