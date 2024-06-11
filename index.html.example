@@ -1,29 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sundsvalls kommun AI-assistent</title>
+    <style>
+      html {
+        font-size: 10px;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sundsvalls kommun AI-assistent</title>
-  <style>
-    html {
-      font-size: 10px;
-    }
+      h1 {
+        color: red;
+      }
 
-    h1 {
-      color: red;
-    }
+      .test p {
+        margin-top: 11px;
+      }
+    </style>
+  </head>
 
-    .test p {
-      margin-top: 11px;
-    }
-  </style>
-</head>
+  <body class="test">
 
-<body class="test">
-  <div id="qwertyroot" data-user="" data-hash="" data-assistant=""></div>
-  <script type="module" src="/src/main.tsx"></script>
-</body>
-
+    <!-- Use like this:
+      <qwerty 
+          user=""  //User id 
+          hash="" //Assistant hash
+          assistant="" //Assistant Id
+          fontbase="" //Sites font base size in px (number only)
+          top="" //Position from top in full screen mode
+          bottom="" //Position from bottom 
+          left="" //Position from left in full screen mode
+          right="" //Position from right
+          questions="Ett frågeförslag, Ett annat förslag" //Predefined questions, separated by comma.
+          questions-title="Vad vill du ha hjälp med?" //Title to be shown before the predfined questions
+    /> -->
+    <qwerty
+      user=""
+      hash=""
+      assistant=""
+      fontbase="10"
+      top="5rem" />
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

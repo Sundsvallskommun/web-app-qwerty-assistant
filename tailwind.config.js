@@ -1,5 +1,8 @@
+import Core from "@sk-web-gui/core";
+import ContainerQueries from "@tailwindcss/container-queries";
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   mode: "jit",
   content: [
     "./**/*.{js,ts,jsx,tsx}",
@@ -11,25 +14,24 @@ module.exports = {
   darkMode: "class", // or 'media' or 'class'
   important: "#qwertyroot",
   corePlugins: {
-    // preflight: false,
+    preflight: false,
   },
-  theme: { extend: {} },
-  plugins: [
-    //require('@tailwindcss/typography'),
-    // require("@tailwindcss/forms"),
-    require("@sk-web-gui/core")({
-      cssBase: true,
-    }),
-  ],
-  presets: [
-    {
-      theme: {
-        extend: {
-          backgroundImage: {
-            assistant: "url('../assets/assistanticon.png')",
-          },
-        },
+  blocklist: [],
+  theme: {
+    extend: {
+      spacing: {
+        assistanttop: "var(--sk-spacing-assistanttop)",
+        assistantbottom: "var(--sk-spacing-assistantbottom)",
+        assistantleft: "var(--sk-spacing-assistantleft)",
+        assistantright: "var(--sk-spacing-assistantright)",
       },
     },
+  },
+  plugins: [
+    Core({
+      cssBase: false,
+      colors: [],
+    }),
+    ContainerQueries,
   ],
 };

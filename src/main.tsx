@@ -1,23 +1,34 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { AppWrapper } from "./context/app.context";
 import "./index.css";
 
 export const initializeReactApp = (rootElement) => {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <React.StrictMode>
-      <AppWrapper>
-        <App
-          user={rootElement.getAttribute("data-user")}
-          hash={rootElement.getAttribute("data-hash")}
-          assistantId={
-            rootElement.getAttribute("data-assistant") ||
-            import.meta.env.VITE_DEFAULT_ASSISTANT_ID
-          }
-        />
-      </AppWrapper>
+      <App
+        user={rootElement.getAttribute("user")}
+        hash={rootElement.getAttribute("hash")}
+        assistantId={
+          rootElement.getAttribute("assistant") ||
+          import.meta.env.VITE_DEFAULT_ASSISTANT_ID
+        }
+        fontBase={rootElement.getAttribute("fontbase")}
+        topSpace={rootElement.getAttribute("top")}
+        bottomSpace={rootElement.getAttribute("bottom")}
+        leftSpace={rootElement.getAttribute("left")}
+        rightSpace={rootElement.getAttribute("right")}
+        questionsTitle={rootElement.getAttribute("questions-title")}
+        questions={
+          rootElement.getAttribute("questions")
+            ? rootElement
+                .getAttribute("questions")
+                .replace(/\[|\]|'|"/gm, "")
+                .split(",")
+            : undefined
+        }
+      />
     </React.StrictMode>
   );
 };
@@ -35,8 +46,11 @@ class CustomAppComponent extends HTMLElement {
       const templateContent = template.content;
       const shadowRoot = this.attachShadow({ mode: "open" });
       shadowRoot.appendChild(templateContent.cloneNode(true));
-
-      const rootElement = shadowRoot.querySelector("#qwertyroot");
+      const tagElement = document.getElementsByTagName("qwerty")[0];
+      if (tagElement) {
+        tagElement.setAttribute("id", "qwertyroot");
+      }
+      const rootElement = document.getElementById("qwertyroot");
       if (rootElement) {
         initializeReactApp(rootElement);
       } else {
@@ -53,7 +67,11 @@ if (container) {
   container.appendChild(document.createElement("qwerty-app"));
 }
 
-const topLevel = document.querySelector("#qwertyroot") as HTMLElement;
+const tagElement = document.getElementsByTagName("qwerty")[0];
+if (tagElement && !tagElement.getAttribute("id")) {
+  tagElement.setAttribute("id", "qwertyroot");
+}
+const topLevel = document.getElementById("qwertyroot") as HTMLElement;
 if (topLevel) {
   initializeReactApp(topLevel);
 }

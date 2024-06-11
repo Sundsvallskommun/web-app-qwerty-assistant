@@ -1,49 +1,106 @@
-import { defaultTheme, extendTheme, GuiProvider } from "@sk-web-gui/react";
+import {
+  ColorSchemeMode,
+  GuiProvider,
+  defaultTheme,
+  extendTheme,
+} from "@sk-web-gui/react";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import "./App.css";
-import { Assistant } from "./components/Assistant";
-import { useAppContext } from "./context/app.context";
-import { getAssistantById } from "./services/assistant-service";
-import { hasExtendedFunctionality } from "./services/featureflag-service";
+import {
+  useAssistantStore,
+  AssistantSettings,
+  AssistantInfo,
+  setAssistantStoreName,
+  useSessions,
+} from "@sk-web-gui/ai";
+import { Assistant } from "./components/assistant";
 
 function App({
   user,
   hash,
   assistantId,
+  fontBase,
+  topSpace,
+  bottomSpace,
+  leftSpace,
+  rightSpace,
+  questionsTitle,
+  questions,
 }: {
-  user: string | null;
-  hash: string | null;
-  assistantId: string | null;
+  user?: string | null;
+  hash?: string | null;
+  assistantId?: string | null;
+  fontBase?: string;
+  topSpace?: string;
+  bottomSpace?: string;
+  leftSpace?: string;
+  rightSpace?: string;
+  questionsTitle?: string;
+  questions?: string[];
 }) {
-  const { setUser, setHash, setAssistantId, setAssistant } = useAppContext();
-  const [colorScheme] = useState("light");
+  const [setSettings, setInfo] = useAssistantStore((state) => [
+    state.setSettings,
+    state.setInfo,
+  ]);
+  const newSession = useSessions((state) => state.newSession);
+
+  const [loaded, setLoaded] = useState<boolean>(false);
+
+  const units = useMemo(
+    () => ({
+      assistanttop: topSpace || "0px",
+      assistantbottom: bottomSpace || "0px",
+      assistantleft: leftSpace || "0px",
+      assistantright: rightSpace || "0px",
+    }),
+    [topSpace, bottomSpace, leftSpace, rightSpace]
+  );
 
   const theme = useMemo(
     () =>
       extendTheme({
-        cursor: colorScheme === "light" ? "pointer" : "default",
-        colorSchemes: defaultTheme.colorSchemes,
+        spacing: { ...defaultTheme.spacing, ...units },
       }),
-    [colorScheme]
+    [units]
   );
 
   useEffect(() => {
-    setUser(user || "");
-    setHash(hash || "");
-    setAssistantId(assistantId || "");
-    if (hasExtendedFunctionality() && assistantId) {
-      getAssistantById(assistantId, user, hash)
-        .then(setAssistant)
-        .catch(() => {
-          console.error("Error when fetching assistant");
-        });
-    }
-  }, [user, hash, assistantId]);
+    const settings: AssistantSettings = {
+      user: user || "",
+      assistantId: assistantId || "",
+      stream: import.meta.env.VITE_STREAM_DEFAULT,
+      hash: hash || "",
+      apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
+      app: import.meta.env.VITE_APPLICATION,
+    };
+
+    const info: AssistantInfo = {
+      name: "Qwerty",
+      shortName: "AI",
+      title: "Din AI-guide på intranätet.",
+      description:
+        "Din personliga AI-guide på intranätet. Svarar med glädje på frågor som rör din anställning på Sundsvalls Kommun.",
+      avatar: `${import.meta.env.BASE_URL}assets/assistanticon.png`,
+    };
+
+    setSettings(settings);
+    setInfo(info);
+    setAssistantStoreName(assistantId);
+    newSession();
+
+    setLoaded(true);
+  }, [user, hash, assistantId, setSettings, setInfo, newSession]);
 
   return (
-    <GuiProvider theme={theme} colorScheme={colorScheme}>
+    <GuiProvider
+      theme={theme}
+      colorScheme={ColorSchemeMode.Light}
+      htmlFontSize={fontBase ? parseFloat(fontBase) : 16}
+    >
       <Suspense fallback="loading">
-        <Assistant />
+        {loaded && (
+          <Assistant questions={questions} questionsTitle={questionsTitle} />
+        )}
       </Suspense>
     </GuiProvider>
   );
