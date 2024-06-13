@@ -13,7 +13,7 @@ import {
   setAssistantStoreName,
   useSessions,
 } from "@sk-web-gui/ai";
-import { Assistant } from "./components/assistant";
+import { Assistant } from "./components/Assistant";
 
 function App({
   user,
