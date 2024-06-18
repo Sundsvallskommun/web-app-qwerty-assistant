@@ -1,4 +1,11 @@
 import {
+  AssistantInfo,
+  AssistantSettings,
+  setAssistantStoreName,
+  useAssistantStore,
+  useSessions,
+} from "@sk-web-gui/ai";
+import {
   ColorSchemeMode,
   GuiProvider,
   defaultTheme,
@@ -6,13 +13,6 @@ import {
 } from "@sk-web-gui/react";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import "./App.css";
-import {
-  useAssistantStore,
-  AssistantSettings,
-  AssistantInfo,
-  setAssistantStoreName,
-  useSessions,
-} from "@sk-web-gui/ai";
 import { Assistant } from "./components/Assistant";
 
 function App({
@@ -60,6 +60,7 @@ function App({
     () =>
       extendTheme({
         spacing: { ...defaultTheme.spacing, ...units },
+        // screens: { ...defaultTheme.screens, "phone-min": "320px" },
       }),
     [units]
   );
@@ -80,7 +81,7 @@ function App({
       title: "Din AI-guide på intranätet.",
       description:
         "Din personliga AI-guide på intranätet. Svarar med glädje på frågor som rör din anställning på Sundsvalls Kommun.",
-      avatar: `${import.meta.env.BASE_URL}assets/assistanticon.png`,
+      avatar: `${import.meta.env.VITE_BASE_PATH}assets/assistanticon.png`,
     };
 
     setSettings(settings);
