@@ -12,7 +12,7 @@ export default {
     "./node_modules/@sk-web-gui/*/dist/**/*.js",
   ],
   darkMode: "class", // or 'media' or 'class'
-  important: "#qwertyroot",
+  // important: "#qwertyroot",
   corePlugins: {
     preflight: false,
   },

@@ -10,7 +10,7 @@ export const Assistant: React.FC<AssistantProps> = (props) => {
   const { isMaxSmallDevice } = useThemeQueries();
 
   return (
-    <div>
+    <>
       {/* Temporary disable history by providing an empty array.
       Remove to enable history again */}
       <AIModule
@@ -18,7 +18,12 @@ export const Assistant: React.FC<AssistantProps> = (props) => {
         {...props}
         isMobile={isMaxSmallDevice}
         showFeedback
+        readmore={{
+          url: "https://www.sundsvall.se/AI",
+          description:
+            "Hur Sundsvalls kommun använder artificiell intelligens (AI): www.sundsvall.se/AI",
+        }}
       />
-    </div>
+    </>
   );
 };

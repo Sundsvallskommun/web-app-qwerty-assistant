@@ -12,7 +12,6 @@ import {
   extendTheme,
 } from "@sk-web-gui/react";
 import { Suspense, useEffect, useMemo, useState } from "react";
-import "./App.css";
 import { Assistant } from "./components/Assistant";
 
 function App({
@@ -79,8 +78,11 @@ function App({
       name: "Qwerty",
       shortName: "AI",
       title: "Din AI-guide på intranätet.",
-      description:
-        "Din personliga AI-guide på intranätet. Svarar med glädje på frågor som rör din anställning på Sundsvalls Kommun.",
+      description: {
+        default:
+          "Fråga intranätsassistenten Qwerty om sådant du behöver veta som medarbetare på Sundsvalls kommun.",
+        en: "The AI assistant can answer your questions in multiple languages.",
+      },
       avatar: `${import.meta.env.VITE_BASE_PATH}assets/assistanticon.png`,
     };
 
