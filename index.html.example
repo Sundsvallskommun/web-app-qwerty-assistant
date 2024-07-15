@@ -34,6 +34,7 @@
           right="" //Position from right
           questions="Ett frågeförslag, Ett annat förslag" //Predefined questions, separated by comma.
           questions-title="Vad vill du ha hjälp med?" //Title to be shown before the predfined questions
+          shadow="" //true or false. Wether or not to render in shadow dom. @default true
     /> -->
     <qwerty
       user=""

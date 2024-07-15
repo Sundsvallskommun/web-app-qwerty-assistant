@@ -5,7 +5,7 @@
   text-rendering: optimizeLegibility;
   touch-action: manipulation;
 
-  @apply text-base bg-background-content {
+  @apply text-base {
   }
 
   @apply text-body {

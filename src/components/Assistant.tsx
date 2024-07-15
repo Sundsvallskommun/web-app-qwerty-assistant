@@ -7,7 +7,7 @@ interface AssistantProps {
 }
 
 export const Assistant: React.FC<AssistantProps> = (props) => {
-  const { isMaxSmallDevice } = useThemeQueries();
+  const { isMaxMediumDevice } = useThemeQueries();
 
   return (
     <>
@@ -16,7 +16,7 @@ export const Assistant: React.FC<AssistantProps> = (props) => {
       <AIModule
         sessionHistory={[]}
         {...props}
-        isMobile={isMaxSmallDevice}
+        isMobile={isMaxMediumDevice}
         showFeedback
         readmore={{
           url: "https://www.sundsvall.se/AI",

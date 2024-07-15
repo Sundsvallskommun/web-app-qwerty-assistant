@@ -23,9 +23,7 @@
     );
   }
 }
-.sk-ai-module-content-row {
-  @apply bg-background-content;
-}
+
 .sk-ai-markdown {
   word-break: break-word;
 }
