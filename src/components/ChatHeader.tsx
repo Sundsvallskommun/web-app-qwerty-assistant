@@ -2,9 +2,11 @@ import { Button, Icon, cx } from "@sk-web-gui/react";
 import { isMaximizable } from "../services/featureflag-service";
 import { Logo } from "./Logo";
 import { useAppContext } from "../context/app.context";
+import { getStyles } from "../services/config-service";
 
 export const ChatHeader = ({ fullscreen, setFullscreen, open, setOpen }) => {
   const { assistantId } = useAppContext();
+  const { brandText, brandWeight } = getStyles();
   return (
     <header
       className={cx(
@@ -54,11 +56,13 @@ export const ChatHeader = ({ fullscreen, setFullscreen, open, setOpen }) => {
         </div>
       ) : null}
       <div className="h-full flex-grow leading-none flex flex-col justify-around gap-2">
-        <p className="font-bold p-0 !m-0 mt-2">
+        <p className={cx(`font-bold p-0 !m-0 mt-2`, brandText, brandWeight)}>
           {import.meta.env.VITE_ASSISTANT_TITLE}
         </p>
         {!open ? (
-          <p className="p-0 !m-0">{import.meta.env.VITE_ASSISTANT_SUBTITLE}</p>
+          <p className={cx(`p-0 !m-0 text-small`, brandText)}>
+            {import.meta.env.VITE_ASSISTANT_SUBTITLE}
+          </p>
         ) : null}
       </div>
       {isMaximizable() && open ? (
